@@ -249,12 +249,12 @@
     align-items: center;
 }
 
-.dashboard-user__header-person{
+.dashboard-user__header-person {
     color: white;
     margin-right: 2rem;
 }
 
-.dashboard-user__header img{
+.dashboard-user__header img {
     height: 40px;
     width: 40px;
     border-radius: 50%;
@@ -265,9 +265,27 @@
     flex-direction: column;
 }
 
-.dashboard-user__content{
+.dashboard-user__content {
     display: flex;
-    padding: 5rem;
-    background-color: aquamarine;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1rem;
+    padding: 3.5rem;
+    background-color: rgba(228, 228, 228, 0.496);
     height: 100%;
+}
+
+.dashboard-user__content-button {
+    width: 11rem;
+    padding: .5rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #22c03a;
+    color: white;
+}
+
+.dashboard-user__content-button:hover {
+    cursor: pointer;
+    background-color: #1fae35;
+    transition: all ease-in-out .2s;
 }

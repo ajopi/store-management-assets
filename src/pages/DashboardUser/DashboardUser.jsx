@@ -1,5 +1,10 @@
 import {
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Paper,
   Table,
   TableBody,
@@ -11,6 +16,8 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import useUser from "../../store/useUsers";
+import HeaderDefault from "../../components/HeaderDefault/HeaderDefault";
+import { Outlet, useNavigate } from "react-router-dom";
 const columns = [
   {
     id: "name",
@@ -48,10 +55,20 @@ const columns = [
 ];
 
 const DashboardUser = () => {
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [rowData, setRowData] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [openEdit, setOpenEdit] = useState(false);
+
+  const [selectedData, setSelectedData] = useState({});
+  const [editItemName, setEditItemName] = useState("");
+  const [editItemPrice, setEditItemPrice] = useState(0);
+  const [editItemStatus, seteditItemStatus] = useState();
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  console.log(user);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -63,7 +80,9 @@ const DashboardUser = () => {
   };
 
   //   call data from State Management
-  const { fetchData, deleteData } = useUser((state) => state);
+  const { fetchData, deleteData, updateTransactionData } = useUser(
+    (state) => state
+  );
   useEffect(() => {
     const getData = async () => {
       await fetchData();
@@ -88,7 +107,6 @@ const DashboardUser = () => {
       setRowData(mappedData);
     }
   }, [data]);
-  console.log(rowData);
 
   const handleDeleteDataTransaction = async (userId, transactionId) => {
     await deleteData(userId, transactionId);
@@ -99,16 +117,50 @@ const DashboardUser = () => {
     );
   };
 
+  const handleOpenEdit = (row) => {
+    setSelectedData(row);
+    setEditItemName(row.item);
+    setEditItemPrice(row.price.split("$").join(""));
+    seteditItemStatus(row.status === "Completed");
+    setOpenEdit(!openEdit);
+  };
+  console.log(selectedData);
+
+  const handleSubmitEdit = async () => {
+    await updateTransactionData(
+      selectedData.id,
+      editItemName,
+      editItemPrice,
+      editItemStatus
+    );
+    setRowData((prevData) =>
+      prevData.map((row) => {
+        return row.transactionId === selectedData.transactionId
+          ? {
+              ...row,
+              item: editItemName,
+              price: "$" + editItemPrice,
+              status: editItemStatus ? "Completed" : "Pending",
+            }
+          : row;
+      })
+    );
+    setOpenEdit(false);
+  };
   return (
     <div className="dashboard-user">
-      <header className="dashboard-user__header">
-        <img src="https://loremflickr.com/640/480/abstract" alt="ini image" />
-        <div className="dashboard-user__header-person">
-          <h4>Name</h4>
-          <p>job title</p>
-        </div>
-      </header>
+      <HeaderDefault
+        avatar={user.avatar}
+        userName={user.name}
+        userPosition={user.position}
+      />
       <div className="dashboard-user__content">
+        <button
+          className="dashboard-user__content-button"
+          onClick={() => navigate("create-data")}
+        >
+          Create Your Transaction
+        </button>
         <Paper sx={{ width: "100%", overflow: "hidden" }}>
           <TableContainer sx={{ maxHeight: 440 }}>
             <Table stickyHeader aria-label="sticky table">
@@ -147,9 +199,7 @@ const DashboardUser = () => {
                                     color="primary"
                                     size="small"
                                     style={{ marginRight: "8px" }}
-                                    // onClick={() =>
-                                    //   handleOpenEdit(row.idPenilaian)
-                                    // }
+                                    onClick={() => handleOpenEdit(row)}
                                   >
                                     Edit
                                   </Button>
@@ -188,8 +238,51 @@ const DashboardUser = () => {
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
+          <Dialog open={openEdit} onClose={() => setOpenEdit(!openEdit)}>
+            <DialogTitle>Edit Data Transaction</DialogTitle>
+            <DialogContent>
+              <DialogContentText>Edit Item Name</DialogContentText>
+              <input
+                type="text"
+                style={{ width: "100%", marginBottom: "10px", height: "40px" }}
+                placeholder="Edit item Name"
+                onChange={(e) => setEditItemName(e.target.value)}
+                value={editItemName || ""}
+                id="edit-item-name"
+              />
+
+              <DialogContentText>Edit Price Item</DialogContentText>
+              <input
+                type="number"
+                style={{ width: "100%", marginBottom: "10px", height: "40px" }}
+                placeholder="Edit Price Item"
+                onChange={(e) => setEditItemPrice(e.target.value)}
+                value={editItemPrice || ""}
+                id="edit-item-price"
+              />
+
+              <DialogContentText>
+                Check the Checkbox If the Transaction is completed?
+              </DialogContentText>
+              <input
+                type="checkbox"
+                checked={editItemStatus}
+                onChange={(e) => seteditItemStatus(e.target.checked)}
+                value={editItemStatus || ""}
+                id="edit-item-status"
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button>Cancel</Button>
+              <Button type="submit" onClick={handleSubmitEdit}>
+                Submit
+              </Button>
+            </DialogActions>
+          </Dialog>
         </Paper>
       </div>
+
+      <Outlet />
     </div>
   );
 };

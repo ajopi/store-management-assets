@@ -12,11 +12,14 @@ const LoginPage = () => {
   // Calls Data from State Management
   const { usersData, fetchData } = useUser((state) => state);
   useEffect(() => {
-    fetchData();
-    setDataUsers(usersData);
+    const getData = async () => {
+      await fetchData();
+      setDataUsers(useUser.getState().usersData);
+    };
+    getData();
   }, []);
   console.log(dataUsers);
-  
+
   const handleSubmitLogin = (e) => {
     e.preventDefault();
     const user = dataUsers.find((user) => {
@@ -25,6 +28,7 @@ const LoginPage = () => {
 
     if (user) {
       localStorage.setItem("token", user.auth_token);
+      localStorage.setItem("user", JSON.stringify(user));
       navigate("/dashboard");
     } else {
       alert("invalid user or email");

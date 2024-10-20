@@ -4,6 +4,7 @@ import LoginPage from "../pages/LoginPage/LoginPage";
 import SignUpPage from "../pages/SignUpPage/SignUpPage";
 import DashboardUser from "../pages/DashboardUser/DashboardUser";
 import ProtectedRoutes from "./ProtectedRoutes";
+import CreateData from "../pages/DashboardUser/CreateData";
 
 const DefaultRouter = () => {
   return (
@@ -12,7 +13,9 @@ const DefaultRouter = () => {
         <Route path="/" element={<LoginPage />} />
         <Route path="/sign-up" element={<SignUpPage />} />
         <Route element={<ProtectedRoutes />}>
-          <Route path="/dashboard" element={<DashboardUser />} />
+          <Route path="/dashboard" element={<DashboardUser />}>
+            <Route path="create-data" element={<CreateData />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
