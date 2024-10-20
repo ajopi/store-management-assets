@@ -1,8 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useUser from "../../store/useUsers";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { createNewUser } = useUser((state) => state);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const create = async () => {
+      await createNewUser(fullName, email, password);
+    };
+    create();
+    window.alert("User successfully created!");
+    setFullName("");
+    setEmail("");
+    setPassword("");
+  };
   return (
     <div className="signup-page">
       <div className="signup-page__left-content">
@@ -12,7 +29,7 @@ const SignUpPage = () => {
       </div>
 
       <div className="signup-page__right-content">
-        <form>
+        <form onSubmit={(e) => handleSubmit(e)}>
           <h1>Hello!</h1>
           <p>Sign Up to Get Started </p>
           <input
@@ -20,18 +37,24 @@ const SignUpPage = () => {
             name="full-name-signup"
             id="full-name-signup"
             placeholder="Full Name"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
           />
           <input
             type="email"
             name="email-signup"
             id="email-signup"
             placeholder="Email Address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <input
             type="password"
             name="password-signup"
             id="password-signup"
             placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <button id="register">Register</button>
         </form>

@@ -60,6 +60,48 @@ const useUser = create(
         console.log(error);
       }
     },
+    createTransactionData: async (userId, itemName, price, status) => {
+      let data = JSON.stringify({
+        item: itemName,
+        price: price,
+        status: status,
+      });
+
+      let config = {
+        method: "post",
+        maxBodyLength: Infinity,
+        url: `https://6712d25f6c5f5ced6624bd5c.mockapi.io/api/v1/users/${userId}/transactionData`,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: data,
+      };
+
+      const response = await axios.request(config);
+      console.log("data Created successfully");
+      set({ usersData: await response.data });
+    },
+    createNewUser: async (name, email, password) => {
+      let data = JSON.stringify({
+        name: name,
+        email: email,
+        password: password,
+      });
+
+      let config = {
+        method: "post",
+        maxBodyLength: Infinity,
+        url: "https://6712d25f6c5f5ced6624bd5c.mockapi.io/api/v1/users",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: data,
+      };
+
+      const response = await axios.request(config);
+      console.log("User Created successfully");
+      set({ usersData: await response.data });
+    },
   }))
 );
 export default useUser;

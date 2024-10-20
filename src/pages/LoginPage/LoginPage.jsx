@@ -18,7 +18,6 @@ const LoginPage = () => {
     };
     getData();
   }, []);
-  console.log(dataUsers);
 
   const handleSubmitLogin = (e) => {
     e.preventDefault();

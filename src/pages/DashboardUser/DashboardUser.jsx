@@ -17,7 +17,7 @@ import {
 import React, { useEffect, useState } from "react";
 import useUser from "../../store/useUsers";
 import HeaderDefault from "../../components/HeaderDefault/HeaderDefault";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 const columns = [
   {
     id: "name",
@@ -56,6 +56,7 @@ const columns = [
 
 const DashboardUser = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [data, setData] = useState([]);
   const [rowData, setRowData] = useState([]);
   const [page, setPage] = useState(0);
@@ -89,7 +90,7 @@ const DashboardUser = () => {
       setData(useUser.getState().usersData);
     };
     getData();
-  }, []);
+  }, [location]);
   useEffect(() => {
     if (data.length > 0) {
       const mappedData = data.flatMap((user) =>
@@ -155,134 +156,149 @@ const DashboardUser = () => {
         userPosition={user.position}
       />
       <div className="dashboard-user__content">
-        <button
-          className="dashboard-user__content-button"
-          onClick={() => navigate("create-data")}
-        >
-          Create Your Transaction
-        </button>
-        <Paper sx={{ width: "100%", overflow: "hidden" }}>
-          <TableContainer sx={{ maxHeight: 440 }}>
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead>
-                <TableRow>
-                  {columns.map((column) => (
-                    <TableCell
-                      key={column.id}
-                      align={column.align}
-                      style={{ minWidth: column.minWidth }}
-                    >
-                      {column.label}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rowData
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => {
-                    return (
-                      <TableRow
-                        hover
-                        role="checkbox"
-                        tabIndex={-1}
-                        key={row.id}
-                      >
-                        {columns.map((column) => {
-                          const value = row[column.id];
-                          return (
-                            <TableCell key={column.id} align={column.align}>
-                              {column.id === "action" ? (
-                                <>
-                                  <Button
-                                    variant="contained"
-                                    color="primary"
-                                    size="small"
-                                    style={{ marginRight: "8px" }}
-                                    onClick={() => handleOpenEdit(row)}
-                                  >
-                                    Edit
-                                  </Button>
-                                  <Button
-                                    variant="contained"
-                                    color="error"
-                                    size="small"
-                                    onClick={() =>
-                                      handleDeleteDataTransaction(
-                                        row.id,
-                                        row.transactionId
-                                      )
-                                    }
-                                  >
-                                    Delete
-                                  </Button>
-                                </>
-                              ) : (
-                                value
-                              )}
-                            </TableCell>
-                          );
-                        })}
-                      </TableRow>
-                    );
-                  })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
-            component="div"
-            count={data.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-          <Dialog open={openEdit} onClose={() => setOpenEdit(!openEdit)}>
-            <DialogTitle>Edit Data Transaction</DialogTitle>
-            <DialogContent>
-              <DialogContentText>Edit Item Name</DialogContentText>
-              <input
-                type="text"
-                style={{ width: "100%", marginBottom: "10px", height: "40px" }}
-                placeholder="Edit item Name"
-                onChange={(e) => setEditItemName(e.target.value)}
-                value={editItemName || ""}
-                id="edit-item-name"
+        {location.pathname === "/dashboard" && (
+          <>
+            <button
+              className="dashboard-user__content-button"
+              onClick={() => navigate("create-data")}
+            >
+              Create Your Transaction
+            </button>
+            <Paper sx={{ width: "100%", overflow: "hidden" }}>
+              <TableContainer sx={{ maxHeight: 440 }}>
+                <Table stickyHeader aria-label="sticky table">
+                  <TableHead>
+                    <TableRow>
+                      {columns.map((column) => (
+                        <TableCell
+                          key={column.id}
+                          align={column.align}
+                          style={{ minWidth: column.minWidth }}
+                        >
+                          {column.label}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {rowData
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                      .map((row) => {
+                        return (
+                          <TableRow
+                            hover
+                            role="checkbox"
+                            tabIndex={-1}
+                            key={row.transactionId}
+                          >
+                            {columns.map((column) => {
+                              {/* console.log(columns); */}
+                              const value = row[column.id];
+                              return (
+                                <TableCell key={column.id} align={column.align}>
+                                  {column.id === "action" ? (
+                                    <>
+                                      <Button
+                                        variant="contained"
+                                        color="primary"
+                                        size="small"
+                                        style={{ marginRight: "8px" }}
+                                        onClick={() => handleOpenEdit(row)}
+                                      >
+                                        Edit
+                                      </Button>
+                                      <Button
+                                        variant="contained"
+                                        color="error"
+                                        size="small"
+                                        onClick={() =>
+                                          handleDeleteDataTransaction(
+                                            row.id,
+                                            row.transactionId
+                                          )
+                                        }
+                                      >
+                                        Delete
+                                      </Button>
+                                    </>
+                                  ) : (
+                                    value
+                                  )}
+                                </TableCell>
+                              );
+                            })}
+                          </TableRow>
+                        );
+                      })}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              <TablePagination
+                rowsPerPageOptions={[10, 25, 100]}
+                component="div"
+                count={data.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
               />
+              <Dialog open={openEdit} onClose={() => setOpenEdit(!openEdit)}>
+                <DialogTitle>Edit Data Transaction</DialogTitle>
+                <DialogContent>
+                  <DialogContentText>Edit Item Name</DialogContentText>
+                  <input
+                    type="text"
+                    style={{
+                      width: "100%",
+                      marginBottom: "10px",
+                      height: "40px",
+                    }}
+                    placeholder="Edit item Name"
+                    onChange={(e) => setEditItemName(e.target.value)}
+                    value={editItemName || ""}
+                    id="edit-item-name"
+                  />
 
-              <DialogContentText>Edit Price Item</DialogContentText>
-              <input
-                type="number"
-                style={{ width: "100%", marginBottom: "10px", height: "40px" }}
-                placeholder="Edit Price Item"
-                onChange={(e) => setEditItemPrice(e.target.value)}
-                value={editItemPrice || ""}
-                id="edit-item-price"
-              />
+                  <DialogContentText>Edit Price Item</DialogContentText>
+                  <input
+                    type="number"
+                    style={{
+                      width: "100%",
+                      marginBottom: "10px",
+                      height: "40px",
+                    }}
+                    placeholder="Edit Price Item"
+                    onChange={(e) => setEditItemPrice(e.target.value)}
+                    value={editItemPrice || ""}
+                    id="edit-item-price"
+                  />
 
-              <DialogContentText>
-                Check the Checkbox If the Transaction is completed?
-              </DialogContentText>
-              <input
-                type="checkbox"
-                checked={editItemStatus}
-                onChange={(e) => seteditItemStatus(e.target.checked)}
-                value={editItemStatus || ""}
-                id="edit-item-status"
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button>Cancel</Button>
-              <Button type="submit" onClick={handleSubmitEdit}>
-                Submit
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </Paper>
+                  <DialogContentText>
+                    Check the Checkbox If the Transaction is completed?
+                  </DialogContentText>
+                  <input
+                    type="checkbox"
+                    checked={editItemStatus}
+                    onChange={(e) => seteditItemStatus(e.target.checked)}
+                    value={editItemStatus || ""}
+                    id="edit-item-status"
+                  />
+                </DialogContent>
+                <DialogActions>
+                  <Button>Cancel</Button>
+                  <Button type="submit" onClick={handleSubmitEdit}>
+                    Submit
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </Paper>
+          </>
+        )}
+        <Outlet />
       </div>
-
-      <Outlet />
     </div>
   );
 };
