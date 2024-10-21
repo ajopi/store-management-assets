@@ -10,7 +10,7 @@ Saya melakukan sedikit improvisasi pada bagian public API, yakni menggunakan Moc
 Saya juga mengimplementasikan state management menggunakan **Zustand** untuk mengelola data pengguna dan state di dalam aplikasi ini.
 
 ## Live Demo
-[Cek demo aplikasi di sini](#)  <!-- Tambahkan link live demo di sini -->
+[Cek demo aplikasi di sini](#)  <!-- https://knowledge-test-mauju.vercel.app/ -->
 
 ## Panduan Menjalankan Aplikasi
 
@@ -18,8 +18,8 @@ Berikut adalah langkah-langkah untuk menjalankan aplikasi ini secara lokal:
 
 1. **Clone repositori ini**:
     ```bash
-    git clone https://github.com/username/repo-name.git
-    cd repo-name
+    git clone https://github.com/ajopi/knowledge-test-mauju
+    cd knowledge-test-mauju
     ```
 
 2. **Install dependencies**:
