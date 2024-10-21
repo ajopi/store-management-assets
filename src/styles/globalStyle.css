@@ -251,7 +251,7 @@
 
 .dashboard-user__header-person {
     color: white;
-    margin-right: 2rem;
+    /* margin-right: 2rem; */
 }
 
 .dashboard-user__header img {
@@ -338,4 +338,130 @@
     cursor: pointer;
     background-color: #1fae35;
     transition: all ease-in-out .2s;
+}
+
+/* END OF CREATE DATA */
+
+/* PROFILE */
+.profile-page {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /* background-color: #97a8e8; */
+}
+
+.profile-page__container {
+    display: flex;
+    gap: 1rem;
+}
+
+.profile-page__details {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    margin-top: 1rem;
+}
+
+.profile-page img {
+    margin-top: 1rem;
+    height: 250px;
+    width: 250px;
+}
+
+/* END OF PROFILE */
+
+
+/* Responsive Design LoginPage */
+@media (max-width: 768px) {
+    .login-page {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .login-page__left-content, .login-page__right-content {
+        width: 100%;
+        padding: 2rem;
+    }
+
+
+
+    .login-page__left-content h1 {
+        font-size: 2rem;
+    }
+
+    .login-page__right-content {
+        padding-top: 2rem;
+    }
+
+    .login-page__right-content form {
+        width: 80%;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-page__left-content h1 {
+        font-size: 1.5rem;
+    }
+
+    .login-page__right-content form {
+        width: 90%;
+    }
+
+    .login-page__btn-group {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .login-page__btn-group button {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Responsive Design for Sign Up Page */
+@media (max-width: 768px) {
+    .signup-page {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .signup-page__left-content, .signup-page__right-content {
+        width: 100%;
+        padding: 2rem;
+    }
+
+
+    .signup-page__left-content h1 {
+        font-size: 2rem;
+    }
+
+    .signup-page__right-content {
+        padding-top: 2rem;
+        text-align: center;
+    }
+
+    .signup-page__right-content form {
+        width: 80%;
+    }
+
+    .signup-page__btn-signin {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .signup-page__left-content h1 {
+        font-size: 1.5rem;
+    }
+
+    .signup-page__right-content form {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .profile-page__container {
+        flex-direction: column;
+        /* Keep image and details stacked on smaller screens */
+    }
 }

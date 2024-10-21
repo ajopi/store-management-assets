@@ -69,7 +69,6 @@ const DashboardUser = () => {
   const [editItemStatus, seteditItemStatus] = useState();
 
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log(user);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -125,7 +124,6 @@ const DashboardUser = () => {
     seteditItemStatus(row.status === "Completed");
     setOpenEdit(!openEdit);
   };
-  console.log(selectedData);
 
   const handleSubmitEdit = async () => {
     await updateTransactionData(
@@ -156,7 +154,8 @@ const DashboardUser = () => {
         userPosition={user.position}
       />
       <div className="dashboard-user__content">
-        {location.pathname === "/dashboard" && (
+        {location.pathname === "/dashboard" && 
+        (
           <>
             <button
               className="dashboard-user__content-button"
@@ -195,7 +194,6 @@ const DashboardUser = () => {
                             key={row.transactionId}
                           >
                             {columns.map((column) => {
-                              {/* console.log(columns); */}
                               const value = row[column.id];
                               return (
                                 <TableCell key={column.id} align={column.align}>

@@ -16,7 +16,7 @@ const CreateData = () => {
     const create = async () => {
       await createTransactionData(user.id, itemName, itemPrice, itemStatus);
       await fetchData();
-      navigate("/dashboard");
+      navigate("/dashboard")
     };
     create();
   };

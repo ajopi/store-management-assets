@@ -5,6 +5,7 @@ import SignUpPage from "../pages/SignUpPage/SignUpPage";
 import DashboardUser from "../pages/DashboardUser/DashboardUser";
 import ProtectedRoutes from "./ProtectedRoutes";
 import CreateData from "../pages/DashboardUser/CreateData";
+import Profile from "../pages/Profile/Profile";
 
 const DefaultRouter = () => {
   return (
@@ -15,6 +16,7 @@ const DefaultRouter = () => {
         <Route element={<ProtectedRoutes />}>
           <Route path="/dashboard" element={<DashboardUser />}>
             <Route path="create-data" element={<CreateData />} />
+            <Route path="profile" element={<Profile />} />
           </Route>
         </Route>
       </Routes>
