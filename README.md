@@ -1,8 +1,43 @@
-# React + Vite
+# Knowledge Test PT MAUJU
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Saya melakukan sedikit improvisasi pada bagian public API, yakni menggunakan MockAPI.io. Hal ini dilakukan karena Reqres tidak fleksibel dalam penyediaan data untuk operasi CRUD. Selain itu, karena keterbatasan kemampuan dari MockAPI.io, saya menggunakan method GET untuk login, dan memfilternya untuk mendapatkan user yang sesuai.
 
-Currently, two official plugins are available:
+## Akun Login
+- Email: `user123@hotmail.com`
+- Password: `user123`
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## State Management
+Saya juga mengimplementasikan state management menggunakan **Zustand** untuk mengelola data pengguna dan state di dalam aplikasi ini.
+
+## Live Demo
+[Cek demo aplikasi di sini](#)  <!-- Tambahkan link live demo di sini -->
+
+## Panduan Menjalankan Aplikasi
+
+Berikut adalah langkah-langkah untuk menjalankan aplikasi ini secara lokal:
+
+1. **Clone repositori ini**:
+    ```bash
+    git clone https://github.com/username/repo-name.git
+    cd repo-name
+    ```
+
+2. **Install dependencies**:
+    ```bash
+    npm install
+    ```
+
+3. **Jalankan aplikasi**:
+    ```bash
+    npm start
+    ```
+
+4. **Akses aplikasi**:
+   Buka browser dan akses `http://localhost:3000`.
+
+## Teknologi yang Digunakan
+- **React.js**
+- **Zustand** untuk state management
+- **MockAPI.io** untuk API public improvisasi
+- **MUI** untuk UI components
+- **React Router** untuk navigasi antar halaman
