@@ -10,7 +10,7 @@ Saya melakukan sedikit improvisasi pada bagian public API, yakni menggunakan Moc
 Saya juga mengimplementasikan state management menggunakan **Zustand** untuk mengelola data pengguna dan state di dalam aplikasi ini.
 
 ## Live Demo
-[Cek demo aplikasi di sini](#https://knowledge-test-mauju.vercel.app/)  <!-- https://knowledge-test-mauju.vercel.app/ -->
+[Cek demo aplikasi di sini](https://knowledge-test-mauju.vercel.app/)  <!-- https://knowledge-test-mauju.vercel.app/ -->
 
 ## Panduan Menjalankan Aplikasi
 
