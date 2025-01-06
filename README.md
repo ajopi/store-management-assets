@@ -18,8 +18,8 @@ Berikut adalah langkah-langkah untuk menjalankan aplikasi ini secara lokal:
 
 1. **Clone repositori ini**:
     ```bash
-    git clone https://github.com/ajopi/knowledge-test-mauju
-    cd knowledge-test-mauju
+    git clone store-management-assets
+    cd store-management-assets
     ```
 
 2. **Install dependencies**:
